@@ -1,0 +1,18 @@
+[
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Vu Lan",
+    "email": "vulan@gmail.com",
+    "dateOfBirth": "2003-03-19",
+    "address": "Ha Dong, Ha Noi",
+    "phone": "0795306148"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174001",
+    "name": "Vu Thi Lan",
+    "email": "vulan123@gmail.com",
+    "dateOfBirth": "2003-03-18",
+    "address": "Bac Giang",
+    "phone": "0295306148"
+  }
+]

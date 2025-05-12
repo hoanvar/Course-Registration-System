@@ -1,0 +1,784 @@
+DELETE http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
+DELETE http://localhost:4000/studenets/123e4567-e89b-12d3-a456-426614174000
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2025-05-12T115700.404.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 138
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu t lan update",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "dateOfBirth": "1999-12-15",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T114714.200.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 131
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu t lan",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "dateOfBirth": "1999-12-15",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T114643.200.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 131
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu t lan",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "dateOfBirth": "1999-12-15",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T114205.400.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "dateOfBirth": "1999-12-15",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T114148.200.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 70
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T114115.400.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 70
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T112652.400.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 70
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T112639.400.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T112630.200.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T112621.200.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T112614.200.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T112541.200.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T112533.200.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T112450.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T112419.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T112231.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T112218.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T112038.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T111940.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T111154.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T111152.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T111133.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T111109.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T111107.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110944.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110757.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110756.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "2003-03-19",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110736.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 101
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110703.400.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110654.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110653.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110652.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110627.500.json
+
+###
+
+GET http://localhost:4000/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-05-12T110624.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110535.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110308.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110307.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456788"
+
+}
+
+<> 2025-05-12T110213.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 129
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "test",
+  "email": "test@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+
+}
+
+<> 2025-05-12T110134.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 131
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lanvu",
+  "email": "lan@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+
+}
+
+<> 2025-05-12T105902.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 131
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lanvu",
+  "email": "lan@gmail.com",
+  "dateOfBirth": "1999-12-15",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+
+}
+
+<> 2025-05-12T105849.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 128
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lanvu",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789",
+  "dateOfBirth": "1999-12-15"
+}
+
+<> 2025-05-12T105828.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 128
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lanvu",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789",
+  "dateOfBirth": "1999-12-15"
+}
+
+<> 2025-05-12T105611.500.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 97
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lanvu",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-12T105552.400.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 70
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-10T195130.400.json
+
+###
+
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Content-Length: 99
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "vu lan",
+  "email": "test@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-10T194744.200.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 95
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lan",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-10T192541.400.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 95
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lan",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-10T192527.200.json
+
+###
+
+POST http://localhost:4000/students
+Content-Type: application/json
+Content-Length: 67
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2025.1.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "name": "lan",
+  "address": "Ha Noi",
+  "phone": "0123456789"
+}
+
+<> 2025-05-10T191023.400.json
+
+###
+
