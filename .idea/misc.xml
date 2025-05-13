@@ -4,6 +4,8 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/studentService/pom.xml" />
+        <option value="$PROJECT_DIR$/student-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/service-registration/pom.xml" />
       </list>
     </option>

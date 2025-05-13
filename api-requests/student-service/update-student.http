@@ -1,0 +1,13 @@
+### Update student
+PUT http://localhost:4000/students/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+  "name": "vu t lan update",
+  "email": "lan@gmail.com",
+  "address": "Ha Noi",
+  "dateOfBirth": "1999-12-15",
+  "phone": "0123456789"
+}
+
+###
