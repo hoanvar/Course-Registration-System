@@ -23,4 +23,5 @@ public class RegistrationMapper {
         registration.setId_student(dto.getId_student());
         return registration;
     }
+
 }
