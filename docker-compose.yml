@@ -144,3 +144,17 @@ services:
         condition: service_started
       course-service:
         condition: service_started
+
+  auth-service:
+    build: ./services/auth-service
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=nhom17
+      - JWT_EXPIRES_IN=1h
+      - PORT=4004
+    ports:
+      - "4004:4004"
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-network
