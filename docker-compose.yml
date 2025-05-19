@@ -1,9 +1,28 @@
 version: '3.8'
+
+networks:
+  microservices-network:
+    driver: bridge
+
 services:
+  eureka-server:
+    build: ./services/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   registration-service-database:
     image: postgres:latest
     container_name: registration-service-database
+    networks:
+      - microservices-network
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: admin_user
@@ -11,14 +30,18 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin_user -d db"]
+      test: [ "CMD-SHELL", "pg_isready -U admin_user -d db" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
   registration-service:
     build: ./services/service-registration
+    networks:
+      - microservices-network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       registration-service-database:
         condition: service_healthy
     environment:
@@ -29,3 +52,95 @@ services:
       SPRING_SQL_INIT_MODE: always
     ports:
       - "4000:4000"
+
+  student-service-database:
+    image: postgres:latest
+    container_name: student-service-database
+    networks:
+      - microservices-network
+    environment:
+      POSTGRES_DB: student_db
+      POSTGRES_USER: student_user
+      POSTGRES_PASSWORD: student_password
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U student_user -d student_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  course-service-database:
+    image: postgres:latest
+    container_name: course-service-database
+    networks:
+      - microservices-network
+    environment:
+      POSTGRES_DB: course_db
+      POSTGRES_USER: course_user
+      POSTGRES_PASSWORD: course_password
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U course_user -d course_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  student-service:
+    build: ./services/student-service
+    networks:
+      - microservices-network
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      student-service-database:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://student-service-database:5432/student_db
+      SPRING_DATASOURCE_USERNAME: student_user
+      SPRING_DATASOURCE_PASSWORD: student_password
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_SQL_INIT_MODE: always
+    ports:
+      - "4001:4001"
+
+  course-service:
+    build: ./services/course-service
+    networks:
+      - microservices-network
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      course-service-database:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://course-service-database:5432/course_db
+      SPRING_DATASOURCE_USERNAME: course_user
+      SPRING_DATASOURCE_PASSWORD: course_password
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_SQL_INIT_MODE: always
+    ports:
+      - "4002:4002"
+
+  api-gateway:
+    build: ./gateway
+    networks:
+      - microservices-network
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      registration-service:
+        condition: service_started
+      student-service:
+        condition: service_started
+      course-service:
+        condition: service_started
