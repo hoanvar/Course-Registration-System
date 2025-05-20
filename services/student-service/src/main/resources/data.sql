@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS student
 INSERT INTO student (id, name, email, date_of_birth, address, phone)
 SELECT '123e4567-e89b-12d3-a456-426614174000',
        'Vu Lan',
-       'vulan@gmail.com',
+       'hoank3807@gmail.com',
        '2003-03-19',
        'Ha Dong, Ha Noi',
        '0795306148'
@@ -24,7 +24,7 @@ SELECT '123e4567-e89b-12d3-a456-426614174000',
 INSERT INTO student (id, name, email, date_of_birth, address, phone)
 SELECT '123e4567-e89b-12d3-a456-426614174001',
        'Vu Thi Lan',
-       'vulan123@gmail.com',
+       'hoank3807@gmail.com',
        '2003-03-18',
        'Bac Giang',
        '0295306148'

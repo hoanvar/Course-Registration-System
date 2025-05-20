@@ -7,19 +7,8 @@ spring:
   cloud:
     compatibility-verifier:
       enabled: false
-  datasource:
-    url: jdbc:postgresql://course-service-database:5432/course_db
-    username: ${SPRING_DATASOURCE_USERNAME:course_user}
-    password: ${SPRING_DATASOURCE_PASSWORD:course_password}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-  sql:
-    init:
-      mode: always
+
+
 
 eureka:
   client:
@@ -29,4 +18,4 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
-    hostname: course-service 
+    hostname: course-service

@@ -7,6 +7,15 @@ spring:
   cloud:
     compatibility-verifier:
       enabled: false
+  kafka:
+    bootstrap-servers: kafka:29092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: -1
+      retries: 1
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
 
 eureka:
   client:
@@ -16,4 +25,4 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
-    hostname: registration-service 
+    hostname: registration-service

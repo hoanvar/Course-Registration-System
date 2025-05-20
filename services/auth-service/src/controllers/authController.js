@@ -6,7 +6,6 @@ const authController = {
         try {
             const { username, password } = req.body;
 
-            // TODO: Thêm logic xác thực người dùng ở đây
             if (username === "admin" && password === "password") {
                 const token = jwt.sign(
                     {

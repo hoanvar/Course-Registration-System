@@ -46,4 +46,16 @@ public class CourseController {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/getCourseById/{id}")
+    public ResponseEntity<CourseResponseDTO> getCourseById(@PathVariable UUID id){
+        CourseResponseDTO dto = courseService.getCourseById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @PostMapping("/getAllCourseWithId")
+    public ResponseEntity<List<CourseResponseDTO>> getAllCourseWithId(@Valid @RequestBody List<UUID> id){
+        List<CourseResponseDTO> dtos = courseService.getAllCourseWithId(id);
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtos);
+    }
 }

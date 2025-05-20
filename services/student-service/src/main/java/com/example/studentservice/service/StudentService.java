@@ -37,6 +37,11 @@ public class StudentService {
         return StudentMapper.toDTO(newStudent);
     }
 
+    public StudentResponseDTO getStudentById(UUID studentId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+        return StudentMapper.toDTO(student);
+    }
+
     public StudentResponseDTO updateStudent(UUID id, StudentRequestDTO studentRequestDTO) {
 
         Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found with ID: " + id));

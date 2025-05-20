@@ -2,9 +2,13 @@ package com.sr.serviceregistration.controller;
 
 import com.sr.serviceregistration.dto.RegistrationRequestDTO;
 import com.sr.serviceregistration.dto.RegistrationResponseDTO;
+import com.sr.serviceregistration.dto.RegistrationWithCourseDTO;
+import com.sr.serviceregistration.model.Registration;
 import com.sr.serviceregistration.service.RegistrationService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 //import io.swagger.v3.annotation.tags;
 
@@ -15,6 +19,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/registrations")
 public class RegistrationController {
+
+
     private final RegistrationService registrationService;
 
     public RegistrationController(RegistrationService registrationService) {
@@ -47,6 +53,14 @@ public class RegistrationController {
     public ResponseEntity<RegistrationResponseDTO> getRegistrationById(@PathVariable UUID id) {
         RegistrationResponseDTO registration = registrationService.getRegistrationById(id);
         return ResponseEntity.ok().body(registration);
+    }
+
+
+    @GetMapping("/student/{id_student}")
+    public ResponseEntity<List<RegistrationWithCourseDTO>> getRegistrationByStudentId(@PathVariable String id_student) {
+        List<RegistrationWithCourseDTO> registrations = registrationService.findAllByIdStudent(id_student);
+
+        return ResponseEntity.ok().body(registrations);
     }
 
 

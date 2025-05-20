@@ -38,6 +38,12 @@ public class StudentController {
         return ResponseEntity.ok().body(studentResponseDTO);
     }
 
+    @GetMapping("/getStudentById/{id}")
+    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable UUID id) {
+        StudentResponseDTO studentResponseDTO = studentService.getStudentById(id);
+        return ResponseEntity.ok().body(studentResponseDTO);
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update a student")
     public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable UUID id,
@@ -48,6 +54,8 @@ public class StudentController {
 
         return ResponseEntity.ok().body(studentResponseDTO);
     }
+
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a student")
