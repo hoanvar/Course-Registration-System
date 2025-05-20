@@ -1,0 +1,150 @@
+openapi: 3.0.1
+
+info:
+  title: Student Service API
+  description: API documentation for Student Service
+  contact:
+    name: Student Service Team
+    email: student-service@example.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+  - url: http://localhost:4001
+    description: Generated server url
+tags:
+  - name: Student
+    description: API for managing students
+paths:
+  /students/{id}:
+    put:
+      tags:
+        - Student
+      summary: Update a student
+      operationId: updateStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StudentResponseDTO"
+    delete:
+      tags:
+        - Student
+      summary: Delete a student
+      operationId: deleteStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+  /students:
+    get:
+      tags:
+        - Student
+      summary: Get students
+      operationId: getStudents
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StudentResponseDTO"
+    post:
+      tags:
+        - Student
+      summary: Create a new student
+      operationId: createStudent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StudentResponseDTO"
+  /students/getStudentById/{id}:
+    get:
+      tags:
+        - Student
+      operationId: getStudentById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StudentResponseDTO"
+components:
+  schemas:
+    StudentRequestDTO:
+      required:
+        - address
+        - dateOfBirth
+        - email
+        - name
+        - phone
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          minLength: 0
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+        dateOfBirth:
+          type: string
+    StudentResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        dateOfBirth:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string

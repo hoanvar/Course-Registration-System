@@ -1,0 +1,160 @@
+openapi: 3.0.1
+info:
+  title: Registration Service API
+  description: API documentation for Registration Service
+  contact:
+    name: Registration Service Team
+    email: registration-service@example.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+- url: http://localhost:4000
+  description: Generated server url
+tags:
+- name: Registration
+  description: API for managing course registrations
+paths:
+  /registrations/{id}:
+    get:
+      tags:
+      - Registration
+      operationId: getRegistrationById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegistrationResponseDTO'
+    put:
+      tags:
+      - Registration
+      operationId: updateRegistration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegistrationResponseDTO'
+    delete:
+      tags:
+      - Registration
+      operationId: deleteRegistrationById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /registrations:
+    get:
+      tags:
+      - Registration
+      operationId: getAllRegistrations
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistrationResponseDTO'
+    post:
+      tags:
+      - Registration
+      operationId: createRegistration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegistrationResponseDTO'
+  /registrations/student/{id_student}:
+    get:
+      tags:
+      - Registration
+      operationId: getRegistrationByStudentId
+      parameters:
+      - name: id_student
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistrationWithCourseDTO'
+components:
+  schemas:
+    RegistrationRequestDTO:
+      required:
+      - id_course
+      - id_student
+      type: object
+      properties:
+        id_student:
+          type: string
+        id_course:
+          type: string
+    RegistrationResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        id_student:
+          type: string
+        id_course:
+          type: string
+    RegistrationWithCourseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        id_student:
+          type: string
+        id_course:
+          type: string
+        course_name:
+          type: string
+        description:
+          type: string

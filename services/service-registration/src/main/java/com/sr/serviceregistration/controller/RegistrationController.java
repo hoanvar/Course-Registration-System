@@ -5,6 +5,8 @@ import com.sr.serviceregistration.dto.RegistrationResponseDTO;
 import com.sr.serviceregistration.dto.RegistrationWithCourseDTO;
 import com.sr.serviceregistration.model.Registration;
 import com.sr.serviceregistration.service.RegistrationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/registrations")
+@Tag(name = "Registration", description = "API for managing course registrations")
 public class RegistrationController {
 
 

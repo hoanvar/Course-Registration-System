@@ -9,6 +9,7 @@
         <module name="service-registration" />
         <module name="course-service" />
         <module name="student-service" />
+        <module name="eureka-server" />
       </profile>
       <profile name="Annotation profile for notification-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -28,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="course-service" options="-parameters" />
       <module name="demo" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="service-registration" options="-parameters" />
       <module name="student-service" options="-parameters" />

@@ -2,18 +2,19 @@ const express = require('express');
 const config = require('./config/config');
 const authRoutes = require('./routes/authRoutes');
 const eurekaClient = require('./config/eureka');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./config/swagger');
 
 const app = express();
 
 app.use(express.json());
 
-// Health check endpoint
+// Swagger UI setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
+// Health check endpoint for Eureka
 app.get('/health', (req, res) => {
-    res.status(200).json({
-        status: 'OK',
-        service: 'auth-service',
-        timestamp: new Date().toISOString()
-    });
+    res.status(200).json({ status: 'UP' });
 });
 
 // Routes

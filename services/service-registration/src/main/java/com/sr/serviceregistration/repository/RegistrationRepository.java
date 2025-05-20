@@ -13,4 +13,7 @@ import java.util.UUID;
 public interface RegistrationRepository  extends JpaRepository<Registration, UUID> {
     @Query("SELECT r FROM Registration r WHERE r.id_student = :idStudent")
     List<Registration> findAllById_student(@Param("idStudent") String idStudent);
+
+    @Query("SELECT r FROM Registration r WHERE r.id_student = :idStudent AND r.id_course = :idCourse")
+    List<Registration> findByStudentAndCourse(@Param("idStudent") String idStudent, @Param("idCourse") String idCourse);
 }

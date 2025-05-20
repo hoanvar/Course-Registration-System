@@ -3,6 +3,7 @@ package com.sr.serviceregistration.service;
 import com.sr.serviceregistration.client.StudentClient;
 import com.sr.serviceregistration.dto.*;
 import com.sr.serviceregistration.exception.RegistrationNotFoundException;
+import com.sr.serviceregistration.exception.DuplicateRegistrationException;
 import com.sr.serviceregistration.mapper.RegistrationMapper;
 import com.sr.serviceregistration.model.Registration;
 import com.sr.serviceregistration.repository.RegistrationRepository;
@@ -89,6 +90,16 @@ public class RegistrationService {
     }
 
     public RegistrationResponseDTO createRegistration(RegistrationRequestDTO registrationRequestDTO) {
+        // Check if student has already registered for this course
+        List<Registration> existingRegistrations = registrationRepository.findByStudentAndCourse(
+            registrationRequestDTO.getId_student(),
+            registrationRequestDTO.getId_course()
+        );
+        
+        if (!existingRegistrations.isEmpty()) {
+            throw new DuplicateRegistrationException("Student has already registered for this course");
+        }
+
         Registration registration = registrationRepository.save(RegistrationMapper.toEntity(registrationRequestDTO));
         CourseResponseDTO courseResponseDTO = courseClient.getCourseById(UUID.fromString(registration.getId_course())).getBody();
         StudentResponseDTO studentResponseDTO = studentClient.getStudentById(UUID.fromString(registration.getId_student())).getBody();

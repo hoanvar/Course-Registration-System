@@ -81,9 +81,7 @@ public class CourseService {
         return CourseMapper.toDTO(course);
     }
 
-    @Cacheable(value = COURSES_CACHE, key = "#ids", unless = "#result.isEmpty()")
     public List<CourseResponseDTO> getAllCourseWithId(List<UUID> ids) {
-        log.info("Cache miss - Fetching courses by ids: {} from database", ids);
         List<Course> courses = courseRespository.findAllById(ids);
         List<CourseResponseDTO> result = courses.stream()
                 .map(CourseMapper::toDTO)

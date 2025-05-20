@@ -83,7 +83,7 @@ th {
 <body>
 
 <header>
-    <h1>Chào mừng đến với Trang Web Mẫu</h1>
+    <h1>Chào mừng đến với đăng ký học</h1>
 </header>
 
 <main>
@@ -104,6 +104,11 @@ th {
         <button id="getCourseBtn">Get Course</button>
     </div>
     <div id="courseData"></div>
+
+    <div>
+        <button id="getCourseRegistedBtn">Get Course Registed</button>
+    </div>
+    <div id="CourseRegistedData"></div>
 </main>
 
 <footer>
@@ -111,6 +116,84 @@ th {
 </footer>
 
 <script>
+    async function cancelRegistration(registrationId) {
+    if (!confirm('Bạn chắc chắn muốn hủy đăng ký?')) return;
+
+    const token = localStorage.getItem('jwtToken');
+    try {
+        const resp = await fetch(
+            `http://localhost:8080/api/registration/registrations/${registrationId}`,
+            { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } }
+        );
+        if (!resp.ok) throw new Error(`Lỗi HTTP: ${resp.status}`);
+
+        // Xoá hàng khỏi bảng
+        const row = document.getElementById(`row-${registrationId}`);
+        if (row) row.remove();
+        alert('✅ Hủy đăng ký thành công!');
+    } catch (err) {
+        alert(`❌ Hủy đăng ký thất bại: ${err.message}`);
+        console.error(err);
+    }
+}
+    document.getElementById('getCourseRegistedBtn').addEventListener('click', async () => {
+    const registedDiv = document.getElementById('CourseRegistedData');
+    const token      = localStorage.getItem('jwtToken');
+    const studentId  = localStorage.getItem('studentId');
+
+    if (!token)     { alert('Chưa xác thực. Vui lòng bấm "Validate" trước.'); return; }
+    if (!studentId) { alert('Chưa chọn sinh viên. Vui lòng nhập ID rồi bấm "Get Student" trước.'); return; }
+
+    registedDiv.innerHTML = 'Đang tải danh sách khóa học đã đăng ký...';
+
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/registration/registrations/student/${studentId}`,
+            { headers: { 'Authorization': 'Bearer ' + token } }
+        );
+        if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
+        const registrations = await response.json();
+
+        if (!Array.isArray(registrations) || registrations.length === 0) {
+            registedDiv.innerHTML = '<p>Chưa đăng ký khóa học nào.</p>';
+            return;
+        }
+
+        let html = `
+            <h3>Khóa học đã đăng ký:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Registration ID</th>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+        registrations.forEach(r => {
+            html += `
+                <tr id="row-${r.id}">
+                    <td>${r.id}</td>
+                    <td>${r.id_course}</td>
+                    <td>${r.course_name}</td>
+                    <td>${r.description}</td>
+                    <td>
+                        <button onclick="cancelRegistration('${r.id}')">Hủy</button>
+                    </td>
+                </tr>`;
+        });
+
+        html += '</tbody></table>';
+        registedDiv.innerHTML = html;
+
+    } catch (err) {
+        registedDiv.innerHTML = `<p style="color:red;">Lỗi khi lấy dữ liệu: ${err.message}</p>`;
+        console.error(err);
+    }
+});
 /* ---------------------------------------------------------
  * 1. LẤY DANH SÁCH KHÓA HỌC
  * --------------------------------------------------------- */

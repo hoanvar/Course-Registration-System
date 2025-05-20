@@ -1,0 +1,153 @@
+openapi: 3.0.1
+info:
+  title: Course Service API
+  description: API documentation for Course Service
+  contact:
+    name: Course Service Team
+    email: course-service@example.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+- url: http://localhost:4002
+  description: Generated server url
+paths:
+  /course/{id}:
+    put:
+      tags:
+      - course-controller
+      operationId: updateCourse
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CourseResponseDTO'
+    delete:
+      tags:
+      - course-controller
+      operationId: deleteCourse
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /course:
+    get:
+      tags:
+      - course-controller
+      operationId: getCourses
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseResponseDTO'
+    post:
+      tags:
+      - course-controller
+      operationId: createCourse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CourseResponseDTO'
+  /course/getAllCourseWithId:
+    post:
+      tags:
+      - course-controller
+      operationId: getAllCourseWithId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseResponseDTO'
+  /course/getCourseById/{id}:
+    get:
+      tags:
+      - course-controller
+      operationId: getCourseById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CourseResponseDTO'
+components:
+  schemas:
+    CourseRequestDTO:
+      required:
+      - course_id
+      - course_name
+      - description
+      type: object
+      properties:
+        course_id:
+          type: string
+        course_name:
+          type: string
+        description:
+          type: string
+    CourseResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        course_id:
+          type: string
+        course_name:
+          type: string
+        description:
+          type: string
