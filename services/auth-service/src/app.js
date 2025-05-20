@@ -1,12 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const config = require('./config/config');
 const authRoutes = require('./routes/authRoutes');
 const eurekaClient = require('./config/eureka');
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
 // Health check endpoint

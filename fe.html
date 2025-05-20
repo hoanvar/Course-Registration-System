@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Web Mẫu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        main {
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #ddd;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        #studentData {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+        #studentData table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #studentData th, #studentData td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #studentData th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+th {
+    background-color: #f4f4f4;
+    text-align: left;
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Chào mừng đến với Trang Web Mẫu</h1>
+</header>
+
+<main>
+    <div>
+        <p>Validate để đăng ký khóa học</p>
+        <button id="validateBtn">Validate</button>
+        <div id="message"></div>   
+    </div>
+    <hr />
+    <div>
+        <label for="student_id">Nhập Student ID:</label>
+        <input id="student_id" placeholder="Nhập ID student" />
+        <button id="getStudentBtn">Get Student</button>
+    </div>
+    <div id="studentData"></div>
+
+    <div>
+        <button id="getCourseBtn">Get Course</button>
+    </div>
+    <div id="courseData"></div>
+</main>
+
+<footer>
+    &copy; 2025 Trang Web Mẫu. Mọi quyền được bảo lưu.
+</footer>
+
+<script>
+/* ---------------------------------------------------------
+ * 1. LẤY DANH SÁCH KHÓA HỌC
+ * --------------------------------------------------------- */
+document.getElementById('getCourseBtn').addEventListener('click', async () => {
+    const courseDataDiv = document.getElementById('courseData');
+    const token = localStorage.getItem('jwtToken');
+    courseDataDiv.innerHTML = 'Đang tải dữ liệu khóa học...';
+
+    try {
+        const response = await fetch('http://localhost:8080/api/courses/course', {
+            method: 'GET',
+            headers: {
+                ...(token && { 'Authorization': 'Bearer ' + token })
+            }
+        });
+
+        if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
+
+        const courses = await response.json();
+
+        if (!Array.isArray(courses) || courses.length === 0) {
+            courseDataDiv.innerHTML = '<p>Không có khóa học nào.</p>';
+            return;
+        }
+
+        let html = `
+            <h3>Danh sách khóa học:</h3>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+        courses.forEach(c => {
+            html += `
+                <tr>
+                    <td>${c.course_id}</td>
+                    <td>${c.course_name}</td>
+                    <td>${c.description}</td>
+                    <td><button onclick="registerCourse('${c.id}')">Đăng ký</button></td>
+                </tr>`;
+        });
+
+        html += '</tbody></table>';
+        courseDataDiv.innerHTML = html;
+
+    } catch (err) {
+        courseDataDiv.innerHTML = `<p style="color:red;">Lỗi khi lấy dữ liệu khóa học: ${err.message}</p>`;
+        console.error(err);
+    }
+});
+
+async function registerCourse(courseId) {
+    const token = localStorage.getItem('jwtToken');
+    const studentId = localStorage.getItem('studentId');
+    console.log("Đọc studentId từ localStorage:", studentId);
+
+    if (!token || !studentId) {
+        alert('Bạn chưa đăng nhập hoặc thiếu thông tin sinh viên.');
+        return;
+    }
+
+        const registration = {
+    id_student: studentId,
+    id_course: courseId
+    };
+
+    console.log(registration)
+
+    try {
+        const response = await fetch('http://localhost:8080/api/registration/registrations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(registration)
+        });
+
+        if (!response.ok) {
+            const errData = await response.text();
+            throw new Error(`Lỗi đăng ký: ${response.status} - ${errData}`);
+        }
+
+        alert(`Đăng ký thành công khóa học: ${courseId}`);
+    } catch (err) {
+        alert(`❌ Đăng ký thất bại: ${err.message}`);
+        console.error(err);
+    }
+}
+
+/* ---------------------------------------------------------
+ * 2. VALIDATE ĐĂNG NHẬP (giữ nguyên)
+ * --------------------------------------------------------- */
+document.getElementById('validateBtn').addEventListener('click', async () => {
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = 'Đang xác thực...';
+
+    try {
+        const response = await fetch('http://localhost:8080/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: 'admin', password: 'password' })
+        });
+        const data = await response.json();
+
+        if (data.success && data.token) {
+            localStorage.setItem('jwtToken', data.token);
+            localStorage.setItem('userInfo', JSON.stringify(data.user));
+            messageEl.style.color = 'green';
+            messageEl.textContent = 'Xác thực thành công! Token đã được lưu.';
+        } else {
+            messageEl.style.color = 'red';
+            messageEl.textContent = 'Xác thực thất bại: ' + (data.message || 'Không rõ nguyên nhân');
+        }
+    } catch (err) {
+        messageEl.style.color = 'red';
+        messageEl.textContent = 'Đã xảy ra lỗi: ' + err.message;
+        console.error(err);
+    }
+});
+
+/* ---------------------------------------------------------
+ * 3. LẤY THÔNG TIN SINH VIÊN (giữ nguyên)
+ * --------------------------------------------------------- */
+document.getElementById('getStudentBtn').addEventListener('click', async () => {
+    const studentId = document.getElementById('student_id').value.trim();
+    const studentDataDiv = document.getElementById('studentData');
+    const token = localStorage.getItem('jwtToken');
+
+    if (!studentId) { alert('Vui lòng nhập student_id'); return; }
+    if (!token)     { alert('Chưa xác thực. Vui lòng bấm "Validate" trước.'); return; }
+
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/students/students/getStudentById/${studentId}`,
+            { headers: { 'Authorization': 'Bearer ' + token } }
+        );
+
+        if (!response.ok) throw new Error(`Lỗi HTTP: ${response.status}`);
+        const student = await response.json();
+        localStorage.setItem('studentId', student.id);
+        console.log("Lưu studentId:", student.id);
+
+
+        studentDataDiv.innerHTML = `
+            <h3>Thông tin sinh viên:</h3>
+            <table>
+                <tr><th>ID</th><td>${student.id}</td></tr>
+                <tr><th>Họ tên</th><td>${student.name}</td></tr>
+                <tr><th>Email</th><td>${student.email}</td></tr>
+                <tr><th>Ngày sinh</th><td>${student.dateOfBirth}</td></tr>
+                <tr><th>Địa chỉ</th><td>${student.address}</td></tr>
+                <tr><th>Số điện thoại</th><td>${student.phone}</td></tr>
+            </table>`;
+    } catch (err) {
+        studentDataDiv.innerHTML = `<p style="color:red;">Lỗi khi lấy dữ liệu: ${err.message}</p>`;
+        console.error(err);
+    }
+});
+</script>
+
+
+</body>
+</html>
