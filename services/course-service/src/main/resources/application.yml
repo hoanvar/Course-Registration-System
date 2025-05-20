@@ -7,8 +7,22 @@ spring:
   cloud:
     compatibility-verifier:
       enabled: false
+  data:
+    redis:
+      host: redis
+      port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 86400000 # 24 hours in milliseconds
+      cache-null-values: false
 
-
+logging:
+  level:
+    root: INFO
+    com.example.courseservice: DEBUG
+    org.springframework.cache: TRACE
+    org.springframework.data.redis: DEBUG
 
 eureka:
   client:

@@ -18,6 +18,22 @@ services:
       retries: 5
       start_period: 40s
 
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - microservices-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   registration-service-database:
     image: postgres:latest
     container_name: registration-service-database
@@ -118,6 +134,8 @@ services:
       eureka-server:
         condition: service_healthy
       course-service-database:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://course-service-database:5432/course_db
@@ -223,3 +241,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+
+volumes:
+  redis_data:
+    driver: local

@@ -7,6 +7,9 @@ import com.example.courseservice.exception.CourseNotFoundException;
 import com.example.courseservice.mapper.CourseMapper;
 import com.example.courseservice.model.Course;
 import com.example.courseservice.respository.CourseRespository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,25 +25,36 @@ public class CourseService {
     private static final Logger log = LoggerFactory.getLogger(CourseService.class);
     private CourseRespository courseRespository;
 
+    private static final String COURSES_CACHE = "courses";
+
     public CourseService(CourseRespository courseRespository) {
         this.courseRespository = courseRespository;
     }
 
-
-
+    @Cacheable(value = COURSES_CACHE, key = "'all_courses'", unless = "#result.isEmpty()")
     public List<CourseResponseDTO> getCourses() {
+        log.info("Cache miss - Fetching courses from database");
         List<Course> courses = courseRespository.findAll();
-        return courses.stream()
+        List<CourseResponseDTO> result = courses.stream()
                 .map(CourseMapper::toDTO)
                 .collect(Collectors.toList());
+        log.info("Found {} courses in database", result.size());
+        return result;
     }
 
+    @CacheEvict(value = COURSES_CACHE, key = "'all_courses'")
     public CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO) {
+        log.info("Creating new course and clearing all_courses cache");
         Course newCourse = courseRespository.save(CourseMapper.toModel(courseRequestDTO));
         return CourseMapper.toDTO(newCourse);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = COURSES_CACHE, key = "'all_courses'"),
+            @CacheEvict(value = COURSES_CACHE, key = "#id")
+    })
     public CourseResponseDTO updateCourse(UUID id, CourseRequestDTO courseRequestDTO) {
+        log.info("Updating course with id: {} and clearing its cache and all_courses cache", id);
         Course course = courseRespository.findById(id).orElseThrow(
                 () -> new CourseNotFoundException("Course not found with ID" + id));
         course.setCourse_id(courseRequestDTO.getCourse_id());
@@ -50,19 +64,37 @@ public class CourseService {
         return CourseMapper.toDTO(updatedCourse);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = COURSES_CACHE, key = "'all_courses'"),
+            @CacheEvict(value = COURSES_CACHE, key = "#id")
+    })
     public void deleteCourse(UUID id) {
+        log.info("Deleting course with id: {} and clearing its cache and all_courses cache", id);
         courseRespository.deleteById(id);
     }
 
+    @Cacheable(value = COURSES_CACHE, key = "#id", unless = "#result == null")
     public CourseResponseDTO getCourseById(UUID id) {
-        Course course = courseRespository.findById(id).orElseThrow();
+        log.info("Cache miss - Fetching course by id: {} from database", id);
+        Course course = courseRespository.findById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course not found with ID" + id));
         return CourseMapper.toDTO(course);
     }
 
+    @Cacheable(value = COURSES_CACHE, key = "#ids", unless = "#result.isEmpty()")
     public List<CourseResponseDTO> getAllCourseWithId(List<UUID> ids) {
+        log.info("Cache miss - Fetching courses by ids: {} from database", ids);
         List<Course> courses = courseRespository.findAllById(ids);
-        return courses.stream()
+        List<CourseResponseDTO> result = courses.stream()
                 .map(CourseMapper::toDTO)
                 .toList();
+        log.info("Found {} courses in database", result.size());
+        return result;
+    }
+
+    // Cache delete
+    @CacheEvict(value = COURSES_CACHE, allEntries = true)
+    public void clearAllCache() {
+        log.info("Clearing all courses cache");
     }
 }
