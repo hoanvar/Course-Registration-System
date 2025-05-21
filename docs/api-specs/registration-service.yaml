@@ -19,7 +19,8 @@ paths:
   /registrations/{id}:
     get:
       tags:
-      - Registration
+        - Registration
+      summary: Get registration by id
       operationId: getRegistrationById
       parameters:
       - name: id
@@ -38,6 +39,7 @@ paths:
     put:
       tags:
       - Registration
+      summary: Update registration by id
       operationId: updateRegistration
       parameters:
       - name: id
@@ -63,6 +65,8 @@ paths:
       tags:
       - Registration
       operationId: deleteRegistrationById
+      summary: Delete registration by id
+
       parameters:
       - name: id
         in: path
@@ -78,6 +82,7 @@ paths:
       tags:
       - Registration
       operationId: getAllRegistrations
+      summary: Get all registrations
       responses:
         "200":
           description: OK
@@ -91,6 +96,8 @@ paths:
       tags:
       - Registration
       operationId: createRegistration
+      summary: Create a new registration
+
       requestBody:
         content:
           application/json:
@@ -109,6 +116,7 @@ paths:
       tags:
       - Registration
       operationId: getRegistrationByStudentId
+      summary: Get registrations by student id
       parameters:
       - name: id_student
         in: path

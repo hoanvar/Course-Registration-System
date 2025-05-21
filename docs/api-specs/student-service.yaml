@@ -95,6 +95,7 @@ paths:
     get:
       tags:
         - Student
+      summary: Get student by id
       operationId: getStudentById
       parameters:
         - name: id

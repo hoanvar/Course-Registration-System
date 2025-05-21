@@ -17,6 +17,8 @@ paths:
     put:
       tags:
       - course-controller
+      summary: Update an existing course
+      description: Updates the information of a specific course by its ID
       operationId: updateCourse
       parameters:
       - name: id
@@ -41,6 +43,8 @@ paths:
     delete:
       tags:
       - course-controller
+      summary: Delete a course
+      description: Removes a specific course from the system by its ID
       operationId: deleteCourse
       parameters:
       - name: id
@@ -56,6 +60,8 @@ paths:
     get:
       tags:
       - course-controller
+      summary: Get all courses
+      description: Retrieves a list of all available courses in the system
       operationId: getCourses
       responses:
         "200":
@@ -69,6 +75,8 @@ paths:
     post:
       tags:
       - course-controller
+      summary: Create a new course
+      description: Creates a new course with the provided information
       operationId: createCourse
       requestBody:
         content:
@@ -87,6 +95,8 @@ paths:
     post:
       tags:
       - course-controller
+      summary: Get multiple courses by IDs
+      description: Retrieves information for multiple courses based on a list of course IDs
       operationId: getAllCourseWithId
       requestBody:
         content:
@@ -110,6 +120,8 @@ paths:
     get:
       tags:
       - course-controller
+      summary: Get course by ID
+      description: Retrieves detailed information about a specific course by its ID
       operationId: getCourseById
       parameters:
       - name: id
@@ -136,18 +148,25 @@ components:
       properties:
         course_id:
           type: string
+          description: Unique identifier for the course
         course_name:
           type: string
+          description: Name of the course
         description:
           type: string
+          description: Detailed description of the course
     CourseResponseDTO:
       type: object
       properties:
         id:
           type: string
+          description: System-generated unique identifier
         course_id:
           type: string
+          description: Course identifier
         course_name:
           type: string
+          description: Name of the course
         description:
           type: string
+          description: Detailed description of the course
