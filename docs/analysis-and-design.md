@@ -1,9 +1,8 @@
 # 📊 Microservices System - Analysis and Design
 
-<<<<<<< HEAD
-This document outlines the business logic analysis and service-oriented design for a specific business process (use case) in the microservices-based system.
+Tài liệu này trình bày phân tích logic nghiệp vụ và thiết kế hướng dịch vụ cho một quy trình nghiệp vụ cụ thể (use case) trong hệ thống microservices.
 
-*Reference*:
+*Tài liệu tham khảo*:
 1. Service-Oriented Architecture Analysis and Design for Services and Microservices - 2nd Edition
 2. Microservices Patterns With examples in Java
 3. Bai tap - Phat trien phan mem huong dich vu - Hungdn - 2024
@@ -11,170 +10,114 @@ This document outlines the business logic analysis and service-oriented design f
 
 ## 1. 🎯 Problem Statement
 
-The system addresses the business process of student course registration. The goal is to allow students to view their information, browse available courses, register for courses, and view their registered courses through a simple web interface. The system is designed as a set of microservices to ensure scalability, maintainability, and clear separation of concerns.
+Hệ thống giải quyết quy trình nghiệp vụ đăng ký khóa học của sinh viên. Mục tiêu là cho phép sinh viên xem thông tin của họ, duyệt các khóa học có sẵn, đăng ký khóa học và xem các khóa học đã đăng ký thông qua giao diện web đơn giản. Hệ thống được thiết kế dưới dạng tập hợp các microservices để đảm bảo khả năng mở rộng, dễ bảo trì và phân tách rõ ràng các thành phần.
 
 ---
 
 ## 2. 🧩 Service-Oriented Analysis
 
 - **Main Steps in the Process:**
-  1. User enters a student name and retrieves student information.
-  2. User fetches the list of all available courses.
-  3. User selects a course and registers for it.
-  4. User retrieves the list of courses registered by a specific student.
+  1. Người dùng nhập tên sinh viên và lấy thông tin sinh viên.
+  2. Người dùng lấy danh sách tất cả các khóa học có sẵn.
+  3. Người dùng chọn một khóa học và đăng ký cho nó.
+  4. Người dùng lấy danh sách các khóa học đã đăng ký bởi một sinh viên cụ thể.
 
 - **Entities Involved:**
   - Student
-  - Course
-  - Registration (linking students and courses)
+  - <img src="./assets/student.png" alt="description" width="300"/>
 
+  - Course
+  - <img src="./assets/course.png" alt="description" width="300"/>
+  - Registration
+  - <img src="./assets/registration.png" alt="description" width="300"/>
+  
 - **Challenges/Requirements Driving Microservices:**
-  - Need for independent scaling of student, course, and registration logic.
-  - Different data storage requirements (e.g., relational databases for students/courses, caching for performance).
-  - Decoupled development and deployment for each business domain.
-  - Integration with a message broker (Kafka) for event-driven communication and reliability.
-  - Centralized API gateway (Nginx) for routing and security.
-  - Service discovery (Eureka) for dynamic service registration and load balancing.
-  - Containerization (Docker) for consistent deployment.
+  - Cần mở rộng độc lập logic sinh viên, khóa học và đăng ký.
+  - Yêu cầu lưu trữ dữ liệu khác nhau (bộ nhớ đệm cho hiệu suất).
+  - Phát triển và triển khai độc lập cho mỗi miền nghiệp vụ.
+  - Tích hợp với message broker (Kafka) cho giao tiếp hướng sự kiện và độ tin cậy.
+  - API gateway tập trung (Nginx) cho định tuyến và bảo mật.
+  - Service discovery (Eureka) cho đăng ký dịch vụ động.
+  - Container hóa (Docker) cho triển khai nhất quán.
+  - Xác thực và phân quyền tập trung với JWT.
+  - Hệ thống thông báo bất đồng bộ cho các sự kiện quan trọng.
+  - Giao tiếp giữa các service thông qua REST API với Feign Client.
 
 ---
 
 ## 3. 🔄 Service-Oriented Design
 
 - **Service Candidates:**
-  - **Student Service:** Manages student data and provides APIs to retrieve student information.
-  - **Course Service:** Manages course data and provides APIs to list and retrieve course details.
-  - **Register Service:** Handles course registration logic, manages registration records, and provides APIs to register students for courses and fetch registered courses by student.
+  - **Student Service:** Quản lý dữ liệu sinh viên và cung cấp API để truy xuất thông tin sinh viên.
+  - **Course Service:** Quản lý dữ liệu khóa học và cung cấp API để liệt kê và truy xuất chi tiết khóa học.
+  - **Register Service:** Xử lý logic đăng ký khóa học, quản lý hồ sơ đăng ký và cung cấp API để đăng ký sinh viên cho khóa học và lấy khóa học đã đăng ký theo sinh viên.
+  - **Authentication Service:** Quản lý xác thực người dùng, cấp phát và xác thực JWT tokens.
+  - **Notification Service:** Xử lý và gửi thông báo cho người dùng dựa trên các sự kiện từ hệ thống.
 
 - **Service Capabilities:**
   - **Student Service:**
-    - Get student by name
-    - (Optionally) Create/update student information
+    - Get student by id
+    - Create/update student information
   - **Course Service:**
     - Get all courses
     - Get course by ID
-    - (Optionally) Create/update course information
+    - Create/update course information
   - **Register Service:**
     - Register a student for a course
     - Get all courses registered by a student
+  - **Authentication Service:**
+    - User registration and login
+    - JWT token generation and validation
+    - Role-based access control
+  - **Notification Service:**
+    - Send registration confirmation
+    - Send course update notifications
+    - Handle notification preferences
 
 - **Interactions:**
-  - The frontend (HTML + JavaScript) interacts with the system via the API Gateway (Nginx).
-  - The API Gateway routes requests to the appropriate microservice.
-  - Register Service may communicate with Student and Course Services to validate student and course existence before registration.
-  - Kafka is used for asynchronous messaging (e.g., emitting registration events).
-  - Redis is used for caching frequently accessed data (e.g., course lists).
+  - Frontend (HTML + JavaScript) tương tác với hệ thống thông qua API Gateway (Nginx).
+  - API Gateway định tuyến các yêu cầu đến microservice phù hợp.
+  - Authentication Service xác thực tất cả các yêu cầu API gửi đến API Gateway.
+  - Register Service có thể giao tiếp với Student và Course Services để xác thực sự tồn tại của sinh viên và khóa học trước khi đăng ký.
+  - Kafka được sử dụng cho gửi tin nhắn bất đồng bộ 
+  - Redis được sử dụng cho bộ nhớ đệm dữ liệu thường xuyên truy cập (danh sách khóa học).
+  - Notification Service lắng nghe các sự kiện từ Kafka và gửi thông báo với thông tin gửi qua topic kafka.
+  - Các service giao tiếp với nhau thông qua Feign Client:
+    - Register Service gọi Student Service để lấy thông tin sinh viên
+    - Register Service gọi Course Service để lấy thông tin khóa học
 
 - **Data Ownership:**
-  - **Student Service:** Owns student data (stored in PostgreSQL or MySQL).
-  - **Course Service:** Owns course data (stored in PostgreSQL or MySQL).
-  - **Register Service:** Owns registration data (stored in PostgreSQL or MySQL).
-  - **Redis:** Used for caching (e.g., course lists, student lookups).
+  - **Student Service:** Sở hữu dữ liệu sinh viên (lưu trong PostgreSQL).
+  - **Course Service:** Sở hữu dữ liệu khóa học (lưu trong PostgreSQL).
+  - **Register Service:** Sở hữu dữ liệu đăng ký (lưu trong PostgreSQL).
+  - **Authentication Service:** Sở hữu dữ liệu người dùng và tokens (lưu trong PostgreSQL và Redis).
+  - **Notification Service:** Sở hữu dữ liệu thông báo và cài đặt thông báo.
+  - **Redis:** Được sử dụng cho bộ nhớ đệm (danh sách khóa học).
 
 - **API Specs:**
-  - Complete API definitions are provided in `docs/api-specs/service-a.yaml` (e.g., Student or Course Service) and `docs/api-specs/service-b.yaml` (e.g., Register Service).
+  - [Student Service API Specs](./api-specs/student-service.yaml)
+  - [Course Service API Specs](./api-specs/course-service.yaml)
+  - [Registration Service API Specs](./api-specs/registration-service.yaml)
+  - [Authentication Service API Specs](./api-specs/authentication-service.yaml)
+
 
 - **Supporting Technologies:**
-  - **API Gateway:** Nginx
-  - **Service Registry:** Eureka
-  - **Message Broker:** Kafka
-  - **Databases:** PostgreSQL, MySQL
-  - **Cache:** Redis
-  - **Containerization:** Docker
-  - **Framework:** Spring Boot (for all services)
+
+| Category | Technology | Purpose |
+|----------|------------|----------|
+| **Backend Framework** | Spring Boot | Framework chính cho phát triển microservices |
+| **API Gateway** | Nginx | Điểm vào duy nhất, định tuyến và bảo mật |
+| **Service Registry** | Eureka | Service discovery |
+| **Message Broker** | Apache Kafka | Giao tiếp bất đồng bộ và xử lý sự kiện |
+| **Database** | PostgreSQL | Lưu trữ dữ liệu chính |
+| **Cache** | Redis | Bộ nhớ đệm |
+| **Container** | Docker | Container hóa và triển khai |
+| **Security** | JWT | Xác thực và phân quyền |
+| **Service Communication** | OpenFeign | Giao tiếp giữa các service |
+| **Build Tool** | Maven | Quản lý dependencies và build |
+| **Version Control** | Git | Quản lý mã nguồn |
 
 ---
-=======
-This document outlines the **analysis** and **design** process for your microservices-based system assignment. Use it to explain your thinking and architecture decisions.
-
----
-
-## 1. 🎯 Problem Statement
-
-_Describe the problem your system is solving._
-
-- Who are the users?
-- What are the main goals?
-- What kind of data is processed?
-
-> Example: A course management system that allows students to register for courses and teachers to manage class rosters.
-
----
-
-## 2. 🧩 Identified Microservices
-
-List the microservices in your system and their responsibilities.
-
-| Service Name  | Responsibility                                | Tech Stack   |
-|---------------|------------------------------------------------|--------------|
-| service-a     | Handles user authentication and authorization | Python Flask |
-| service-b     | Manages course registration and class data    | Python Flask |
-| gateway       | Routes requests to services                   | Nginx / Flask|
-
----
-
-## 3. 🔄 Service Communication
-
-Describe how your services communicate (e.g., REST APIs, message queue, gRPC).
-
-- Gateway ⇄ service-a (REST)
-- Gateway ⇄ service-b (REST)
-- Internal: service-a ⇄ service-b (optional)
-
----
-
-## 4. 🗂️ Data Design
-
-Describe how data is structured and stored in each service.
-
-- service-a: User accounts, credentials
-- service-b: Course catalog, registrations
-
-Use diagrams if possible (DB schema, ERD, etc.)
-
----
-
-## 5. 🔐 Security Considerations
-
-- Use JWT for user sessions
-- Validate input on each service
-- Role-based access control for APIs
-
----
-
-
-## 6. 📦 Deployment Plan
-
-- Use `docker-compose` to manage local environment
-- Each service has its own Dockerfile
-- Environment config stored in `.env` file
-
----
-
-## 7. 🎨 Architecture Diagram
-
-> *(You can add an image or ASCII diagram below)*
-
-```
-+---------+        +--------------+
-| Gateway | <----> | Service A    |
-|         | <----> | Auth Service |
-+---------+        +--------------+
-       |                ^
-       v                |
-+--------------+   +------------------+
-| Service B    |   | Database / Redis |
-| Course Mgmt  |   +------------------+
-+--------------+
-```
-
----
-
-## ✅ Summary
-
-Summarize why this architecture is suitable for your use case, how it scales, and how it supports independent development and deployment.
-
-
 
 ## Author
 
@@ -184,4 +127,3 @@ This template was created by Hung Dang.
 
 
 Good luck! 💪🚀
->>>>>>> ac6b69dd4543d6b9a4e7c72cecd334f5aab5c952

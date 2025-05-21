@@ -1,72 +1,76 @@
 # System Architecture
 
 ## Overview
-<<<<<<< HEAD
-The microservices system enables students to register for courses and view their registered courses through a web interface. The architecture is designed for scalability, maintainability, and clear separation of concerns, leveraging modern technologies such as Nginx (API Gateway), Kafka (message broker), Redis (cache), Eureka (service registry), and Docker (containerization).
+Hệ thống microservices cho phép sinh viên đăng ký khóa học và xem các khóa học đã đăng ký thông qua giao diện web. Kiến trúc được thiết kế để có khả năng mở rộng, dễ bảo trì và phân tách rõ ràng các thành phần, tận dụng các công nghệ hiện đại như Nginx (API Gateway), Kafka (message broker), Redis (cache), Eureka (service registry), Feign (service communication) và Docker (containerization).
 
 ## System Components
-- **Student Service**: Manages student data and provides APIs to retrieve student information.
-- **Course Service**: Manages course data and provides APIs to list and retrieve course details. Frequently accessed course data is cached in Redis for performance.
-- **Register Service**: Handles course registration logic, manages registration records, and provides APIs to register students for courses and fetch registered courses by student. Acts as the orchestrator for registration and query flows.
-- **API Gateway (Nginx)**: Serves as the single entry point for all client requests, routing them to the appropriate backend services and providing basic security and load balancing.
-- **Kafka**: Used as a message broker for asynchronous communication between services, especially for fetching detailed information during registration queries.
-- **Redis**: Used as a cache for course data to improve performance and reduce database load.
-- **Eureka**: Provides service discovery, allowing services to dynamically register and locate each other.
+- <img src="./assets/system.png" alt="description" width="800"/>
+- **Student Service**: Quản lý dữ liệu sinh viên và cung cấp API để truy xuất thông tin sinh viên.
+- **Course Service**: Quản lý dữ liệu khóa học và cung cấp API để liệt kê và truy xuất chi tiết khóa học. Dữ liệu khóa học thường xuyên được truy cập được lưu trong bộ nhớ đệm Redis để tăng hiệu suất.
+- **Register Service**: Xử lý logic đăng ký khóa học, quản lý hồ sơ đăng ký và cung cấp API để đăng ký sinh viên cho các khóa học và lấy danh sách khóa học đã đăng ký của sinh viên. Đóng vai trò là bộ điều phối cho các luồng đăng ký và truy vấn.
+- **Authentication Service**: Quản lý xác thực người dùng, cấp phát và xác thực JWT tokens. Cung cấp bảo mật tập trung cho toàn bộ hệ thống.
+- **Notification Service**: Xử lý và gửi thông báo cho người dùng dựa trên các sự kiện từ hệ thống. Sử dụng Kafka để nhận các sự kiện và gửi thông báo phù hợp.
+- **API Gateway (Nginx)**: Đóng vai trò là điểm vào duy nhất cho tất cả các yêu cầu từ client, định tuyến chúng đến các dịch vụ backend phù hợp và cung cấp bảo mật cơ bản và cân bằng tải.
+- **Kafka**: Được sử dụng làm message broker cho giao tiếp bất đồng bộ giữa các dịch vụ, đặc biệt là để phát ra các sự kiện đăng ký và thông báo.
+- **Redis**: Được sử dụng làm bộ nhớ đệm cho dữ liệu khóa học để cải thiện hiệu suất và giảm tải cho cơ sở dữ liệu.
+- **Eureka**: Cung cấp service discovery, cho phép các dịch vụ đăng ký và định vị lẫn nhau một cách động.
 
 ## Communication
-- **REST APIs**: The frontend communicates with backend services via RESTful APIs exposed through the API Gateway (Nginx).
-- **Message Queues (Kafka)**: Used for asynchronous, event-driven communication between Register Service, Student Service, and Course Service, especially when fetching detailed information about students and courses.
-- **Internal Networking**: Docker Compose service names are used for internal service-to-service communication.
+- **REST APIs**: Frontend giao tiếp với các dịch vụ backend thông qua RESTful APIs được cung cấp thông qua API Gateway (Nginx).
+- **Feign Client**: Các dịch vụ giao tiếp với nhau thông qua REST API sử dụng Spring Cloud OpenFeign, cho phép gọi API giữa các dịch vụ một cách dễ dàng và hiệu quả.
+- **Message Queues (Kafka)**: Được sử dụng cho giao tiếp bất đồng bộ, thông báo sự kiện đăng ký cho notification service.
+- **Internal Networking**: Network Docker được sử dụng cho giao tiếp giữa các dịch vụ nội bộ.
 
 ## Data Flow
+- **Validate Flow:**
+  1. Người dùng nhập nhấp [Validate] trên frontend.
+  2. Frontend gửi yêu cầu POST đến API Gateway.
+  3. API Gateway định tuyến yêu cầu đến Authentication Service.
+  5. Authentication Service xác thực thành công:
+    - Authentication Service tạo JWT token
+    - Lưu token với thời gian hết hạn
+    - Trả về token cho frontend
+  6. Nếu xác thực thất bại:
+    - Trả về thông báo lỗi cho frontend
+  7. Frontend lưu token vào localStorage để sử dụng cho các yêu cầu tiếp theo.
+
+- **View All Courses Flow:**
+  1. Frontend gửi yêu cầu GET đến API Gateway.
+  2. API Gateway định tuyến yêu cầu đến Course Service.
+  3. Course Service kiểm tra cache trong Redis:
+    - Nếu có dữ liệu trong cache: trả về dữ liệu từ cache
+    - Nếu không có dữ liệu trong cache:
+      1. Lấy dữ liệu từ cơ sở dữ liệu PostgreSQL
+      2. Lưu dữ liệu vào Redis cache
+      3. Trả về dữ liệu cho frontend
+  4. Frontend hiển thị danh sách khóa học cho người dùng.
+
 - **Course Registration Flow:**
-  1. The user clicks the "Register" button on the frontend, submitting a registration request.
-  2. The frontend sends a POST request (containing only `student_id` and `course_id`) to the API Gateway (Nginx).
-  3. Nginx forwards the request to the Register Service.
-  4. Register Service saves the registration record in its database.
+  1. Người dùng nhấp vào nút "Đăng ký" trên frontend, gửi yêu cầu đăng ký.
+  2. Frontend gửi yêu cầu POST đến API Gateway (Nginx).
+  4. Nginx chuyển tiếp yêu cầu đến Register Service.
+  5. Register Service gọi Student Service và Course Service thông qua Feign Client để xác thực thông tin.
+  6. Register Service lưu hồ sơ đăng ký vào cơ sở dữ liệu của nó.
+  7. Register Service phát ra sự kiện đăng ký thành công qua Kafka.
+  8. Notification Service nhận sự kiện và gửi thông báo xác nhận cho sinh viên.
 
 - **View Registered Courses Flow:**
-  1. The user clicks to view the courses registered by a student.
-  2. The frontend sends a request to the API Gateway, which routes it to the Register Service.
-  3. Register Service retrieves the list of registered course IDs for the student from its database.
-  4. Register Service uses Kafka to asynchronously request detailed student information from Student Service and course information from Course Service.
-  5. Course Service retrieves course details from Redis cache (if available) or its database (if not cached), then responds via Kafka.
-  6. Student Service responds with student details via Kafka.
-  7. Register Service aggregates the information and returns the complete list of registered courses (with details) to the frontend.
+  1. Người dùng nhấp để xem các khóa học đã đăng ký của một sinh viên.
+  2. Frontend gửi yêu cầu đến API Gateway, nơi định tuyến đến Register Service.
+  3. Register Service xác thực JWT token thông qua Authentication Service.
+  4. Register Service lấy danh sách ID khóa học đã đăng ký của sinh viên từ cơ sở dữ liệu của nó.
+  5. Register Service sử dụng Feign Client để gọi Course Service và lấy thông tin chi tiết về các khóa học.
+  6. Register Service tổng hợp thông tin và trả về danh sách đầy đủ các khóa học đã đăng ký cho frontend.
 
-- **External Dependencies:**
-  - PostgreSQL/MySQL databases for persistent storage in each service.
-  - Redis for caching course data.
-  - Kafka for message brokering.
 
-## Diagram
-- A high-level architecture diagram should be placed in `docs/asset/` to visually represent the components and their interactions.
+
+[//]: # (## Diagram)
+
+[//]: # (- Một sơ đồ kiến trúc cấp cao nên được đặt trong `docs/asset/` để biểu diễn trực quan các thành phần và tương tác của chúng.)
 
 ## Scalability & Fault Tolerance
-- Each service can be independently scaled based on load (e.g., more instances of Register Service during peak registration periods).
-- Redis caching reduces load on the Course Service database and improves response times.
-- Kafka decouples services and provides resilience for asynchronous operations.
-- Nginx and Eureka enable load balancing and dynamic service discovery, supporting high availability and failover.
-=======
-- Describe the purpose of the microservices system.
-- Outline the main components and their responsibilities.
+- Mỗi dịch vụ có thể được mở rộng độc lập dựa trên tải (ví dụ: nhiều phiên bản của Register Service trong thời gian đăng ký cao điểm).
+- Bộ nhớ đệm Redis giảm tải cho cơ sở dữ liệu và cải thiện thời gian phản hồi.
+- Kafka tách biệt các dịch vụ và cung cấp khả năng phục hồi cho các hoạt động bất đồng bộ.
+- Nginx và Eureka cho phép service discovery động, hỗ trợ tính khả dụng cao và failover.
 
-## System Components
-- **Service A**: Brief description of its functionality and role.
-- **Service B**: Brief description of its functionality and role.
-- **API Gateway**: Explain its role in routing and managing requests.
-
-## Communication
-- Describe how services interact (e.g., REST APIs, message queues).
-- Mention internal networking (e.g., Docker Compose service names).
-
-## Data Flow
-- Explain the flow of data between services and the gateway.
-- Include any external dependencies (e.g., databases, third-party APIs).
-
-## Diagram
-- Reference a high-level architecture diagram (place in `docs/asset/`).
-
-## Scalability & Fault Tolerance
-- Briefly discuss how the system can scale or handle failures.
->>>>>>> ac6b69dd4543d6b9a4e7c72cecd334f5aab5c952

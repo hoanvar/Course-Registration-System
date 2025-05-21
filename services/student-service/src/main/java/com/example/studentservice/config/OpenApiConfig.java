@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+
+    //config
     @Bean
     public OpenAPI studentServiceOpenAPI() {
         return new OpenAPI()
