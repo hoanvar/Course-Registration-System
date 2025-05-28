@@ -1,15 +1,4 @@
-# 🧩 MID-PROJECT-022382478
-
-## 👥 Thành viên nhóm
-
-| Tên sinh viên | Mã sinh viên | Đóng góp |
-|--------------|-------------|----------|
-| Vũ Thanh Hoàn | B21DCCN382 | 50%      |
-| Đỗ Thành Công | B21DCCN022 | 25%      |
-| Vũ Thị Lan | B21DCCN478 | 25%      |
-
----
-
+# 🧩 Course-Registration-System
 ## 📁 Folder Structure
 
 ```
