@@ -1,4 +1,8 @@
 # 🧩 Course-Registration-System
+## System Detail
+```
+Documment files in docs folder
+```
 ## 📁 Folder Structure
 
 ```
